@@ -1,0 +1,29 @@
+#!/bin/bash
+awk '
+BEGIN{
+while( getline < "categories") list[$2]=$1;
+} 
+function trim(s) {gsub(/[[:blank:]]/,"_",s);return s} 
+{
+	FS=",";
+	NR>7
+	if($13=="Debit"){
+		pos=trim($3)
+		if (pos in list){
+			expense[list[pos]]=$4;
+			print "[\47"list[pos]"\47,new Date("substr($2,1,10)"),"expense[list[pos]]"],"
+			#print pos"-"list[pos]"-"expense[list[pos]]
+		}else{
+			list[pos]=ghost
+			expense[ghost]=$4
+			print pos >> "categories"
+			print Added new category to categories file
+		}
+	}
+}' download_1274854364185.csv | tr '-' ',' > results
+#awk -F , '{if($13=="Debit"){total+=$4; print "["$3",new Date("substr($2,1,10)"),"$4","total"],";}}' download_1274486431674.csv | tr '-' ',' 
+#This is a comment in the experiment branch 
+cat top.html > page.html
+cat results >> page.html
+cat bottom.html >> page.html
+ 
