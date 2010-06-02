@@ -10,12 +10,12 @@ function trim(s) {gsub(/[[:blank:]]/,"_",s);return s}
 	if($13=="Debit"){
 		pos=trim($3)
 		if (pos in list){
-			expense[list[pos]]=$4;
+			expense[list[pos]]+=$4;
 			print "[\47"list[pos]"\47,new Date("substr($2,1,10)"),"expense[list[pos]]"],"
 			#print pos"-"list[pos]"-"expense[list[pos]]
 		}else{
 			list[pos]=ghost
-			expense[ghost]=$4
+			expense[ghost]+=$4
 			print pos >> "categories"
 			print Added new category to categories file
 		}
